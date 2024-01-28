@@ -1,0 +1,12 @@
+{
+    "mysql": {
+    "host": "192.168.1.146",
+    "user": "discordjs_user",
+    "password": "mM131993Mm$",
+    "database": "disordjs",
+    "port": 3306,
+    "waitForConnections": true,
+    "connectionLimit": 15,
+    "queueLimit": 5
+  }
+}
