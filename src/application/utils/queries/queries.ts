@@ -300,3 +300,33 @@ export const deleteMessageQuery = 'update message set is_active = 0 where messag
 export const addReactionQuery = 'insert into reaction (user_id, message_id, emoji_txt, emoji_id, channel_id, guild_id, added_dtm) value (?,?,?,?,?,?,?)';
 
 export const updateReactionQuery = 'update reaction set removed_dtm = ?, is_active = 0 where message_id = ? and user_id = ? and emoji_txt = ?'
+
+export const getAllMessagesQuery = `
+    select 
+        message_id,
+        content_txt,
+        c.channel_txt,
+        m.created_dtm,
+        u.username as author,
+        is_active,
+        last_modified_dtm
+    from message m
+    join channel c on c.channel_id = m.channel_id and c.channel_id != 285876187727659008
+    join user u on u.user_id = m.author_id
+    order by m.created_dtm desc`
+
+export const getAllEmojisQuery = `
+    select 
+        r.id as reaction_id,
+        message_id,
+        u.username as emoji_giver,
+        emoji_txt,
+        emoji_id,
+        c.channel_txt,
+        is_active,
+        added_dtm,
+        removed_dtm
+    from reaction r 
+    join user u on u.user_id = r.user_id
+    join channel c on c.channel_id = r.channel_id and c.channel_id != 1060779707089567806
+    order by r.added_dtm desc`

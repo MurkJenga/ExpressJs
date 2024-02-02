@@ -1,13 +1,14 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { totalQuery, topMessageQuery, insertMessageQuery, updateMessageQuery, deleteMessageQuery } from '../utils/queries/queries';
 import executeQuery from '../utils/executeQuery'; 
+import { logger } from '../utils/helperFunctions';
 
 const messageRouter = express.Router();
 
 messageRouter.get('/total', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = await executeQuery(totalQuery);
-    console.log(result);
+    const result = await executeQuery(totalQuery); 
+    logger(`/total`)
     res.send(result);
   } catch (error) {
     console.error('Error handling total query:', error);
@@ -18,7 +19,7 @@ messageRouter.get('/total', async (req: Request, res: Response, next: NextFuncti
 messageRouter.get('/topmessage/:userid', async (req: Request, res: Response, next: NextFunction) => {
     try {
       const result = await executeQuery(topMessageQuery, [req.params.userid]);
-      console.log(result);
+      logger(`/topmessage`)
       res.send(result);
     } catch (error) {
       console.error('Error handling total query:', error);

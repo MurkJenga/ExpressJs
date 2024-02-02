@@ -1,13 +1,14 @@
 import express, {Request, Response, NextFunction} from 'express'
 import { givenQuery, recievedQuery, whoGaveQuery, whoRecievedQuery, addReactionQuery, updateReactionQuery } from '../utils/queries/queries';
 import executeQuery from '../utils/executeQuery';
+import { logger } from '../utils/helperFunctions';
 
 const emojiRouter = express.Router()
 
 emojiRouter.get('/given/:emoji', async (req: Request, res: Response, next: NextFunction) => {
     try { 
         const result = await executeQuery(givenQuery, [req.params.emoji]);
-        console.log(result);
+        logger('/given');
         res.send(result);
       } catch (error) {
         console.error('Error handling query:', error);
@@ -19,7 +20,7 @@ emojiRouter.get('/recieved/:emoji', async (req: Request, res: Response, next: Ne
     try {
         const result = await executeQuery(recievedQuery, [req.params.emoji])
         res.send(result)
-        console.log(result)
+        logger('/recieved');
     } catch (error) { 
         console.error('Error handling query:', error);
         res.status(500).send('Internal Server Error');
@@ -30,7 +31,7 @@ emojiRouter.get('/whogave/:userid/:emoji', async (req: Request, res: Response, n
     try {
         const result = await executeQuery(whoGaveQuery, [req.params.emoji, req.params.userid])
         res.send(result)
-        console.log(result)
+        logger('/whogave');
     } catch (error) { 
         console.error('Error handling query:', error);
         res.status(500).send('Internal Server Error');
@@ -41,7 +42,7 @@ emojiRouter.get('/whorecieved/:userid/:emoji', async (req: Request, res: Respons
     try {
         const result = await executeQuery(whoRecievedQuery, [req.params.emoji, req.params.userid])
         res.send(result)
-        console.log(result)
+        logger('/whorecieved');
     } catch (error) { 
         console.error('Error handling query:', error);
         res.status(500).send('Internal Server Error');
