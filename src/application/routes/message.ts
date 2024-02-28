@@ -5,9 +5,10 @@ import { logger } from '../utils/helperFunctions';
 
 const messageRouter = express.Router();
 
-messageRouter.get('/total', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const result = await executeQuery(totalQuery); 
+messageRouter.get('/total/:date', async (req: Request, res: Response, next: NextFunction) => {
+  try {  
+    const date = req.params.date
+    const result = await executeQuery(totalQuery ,[date]); 
     logger(`/total`)
     res.send(result);
   } catch (error) {

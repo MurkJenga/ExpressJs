@@ -3,11 +3,11 @@ export const totalQuery = `
         ROW_NUMBER() OVER ( ORDER BY count(m.message_id) desc ), ". ",
         u.username, ": ",
         format(count(m.message_id), 0)
-        ) stats,
-        count(*) as total
+        ) stats
+        ,count(*) as total
     from user u 
-    left join message m on m.author_id = u.user_id
-    where u.isBot = 0
+    left join message m on m.author_id = u.user_id and date(created_dtm) <= COALESCE(?, current_date())
+    where u.isBot = 0 
     group by u.username
     order by 2 desc
     `
