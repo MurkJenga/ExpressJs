@@ -30,8 +30,8 @@ messageRouter.get('/topmessage/:userid', async (req: Request, res: Response, nex
 
 messageRouter.post('/insertmessage', async (req: Request, res: Response, next:NextFunction) => { 
     const { channelId, guildId, messageId, createdTime, content, ogContent, authorId } = req.body;
-    await executeQuery(insertMessageQuery, [channelId, guildId, messageId, createdTime, content, ogContent, authorId]); 
-    console.log(`Message inserted @ ${createdTime}`)
+    await executeQuery(insertMessageQuery, [BigInt(channelId), BigInt(guildId), BigInt(messageId), createdTime, content, ogContent, BigInt(authorId)]); 
+    console.log(`Message, ${BigInt(messageId)}, inserted @ ${createdTime}`)
     res.send(`Message inserted @ ${createdTime}`)
 })
 
@@ -53,4 +53,4 @@ messageRouter.post('/deletemessage', async (req: Request, res: Response, next: N
     res.send(`Message deleted`)
 })
 
-export default messageRouter;
+export default messageRouter;  

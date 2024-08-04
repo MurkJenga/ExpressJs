@@ -51,7 +51,7 @@ emojiRouter.get('/whorecieved/:userid/:emoji', async (req: Request, res: Respons
 
 emojiRouter.post('/insertemoji', async (req: Request, res: Response, next: NextFunction) => {
     const {userId, messageId, emojiName, emojiId, channelId, guildId, updateTIme} = req.body
-    await executeQuery(addReactionQuery, [userId, messageId, emojiName, emojiId, channelId, guildId, updateTIme])
+    await executeQuery(addReactionQuery, [BigInt(userId), BigInt(messageId), emojiName, emojiId, BigInt(channelId), BigInt(guildId), updateTIme])
     console.log(`Emoji inserted`)
     res.send(`Emoji inserted`)
 })
